@@ -19,13 +19,13 @@ include_directories(${SDL2_INCLUDE_DIR})
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/include/systems
+    ${CMAKE_SOURCE_DIR}/include/managers
 )
 
 SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -std=c++11")
 
 file(GLOB_RECURSE SRCS src/*.cpp)
-#file(GLOB_RECURSE HDRS include/*.h)
+file(GLOB_RECURSE HDRS include/*.h)
 
 add_executable(cppgeng ${SRCS} ${HDRS})
 target_link_libraries(cppgeng ${SDL2_LIBRARY})

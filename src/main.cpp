@@ -6,9 +6,14 @@
  * Main entry point for the Tile Map Engine
  */
 
+#include "globals/display_globals.h"
+#include "managers/display_manager.h"
+
 #include <stdio.h>
 #include <SDL2/SDL.h>
-#include "print.h"
+
+using namespace Globals;
+using namespace Managers;
 
 int main(int argc, char* argv[]) {
 
@@ -16,20 +21,11 @@ int main(int argc, char* argv[]) {
 	//Uncoment the line below if you want to debug this program on Windows.
 	SDL_SetHint(SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING, "1");
 
-	SDL_Window* window;
+	DisplayManager* displayManager = new DisplayManager(Globals::Display::DISPLAY_WIDTH, 
+		Globals::Display::DISPLAY_HEIGHT);
+
+	//TODO: Move the event handling to the display manager.
 	SDL_Event event;
-
-
-	//Screen resolution
-	const int SCREEN_WIDTH = 640;
-	const int SCRENN_HEIGHT = 480;
-	const char* MAIN_WINDOW_TITLE = "Tile Map Engine";
-
-	//Init SDL
-	SDL_Init(SDL_INIT_VIDEO);
-
-	window = SDL_CreateWindow(MAIN_WINDOW_TITLE, SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCRENN_HEIGHT, SDL_WINDOW_OPENGL);
 
 	while (true) {
 
@@ -37,10 +33,7 @@ int main(int argc, char* argv[]) {
 			switch (event.type) {
 				case SDL_QUIT: {
 					//Release any allocated resource
-					SDL_DestroyWindow(window);
-					
-					Print p;
-					p.printMessage("Done!");
+					SDL_DestroyWindow(displayManager->getDisplay());
 
 					return 0;
 				}
