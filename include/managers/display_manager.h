@@ -13,11 +13,22 @@
 
 namespace Managers {
 
+    /* strcut Display
+     * Represents the display object. Contains a pointer to the window 
+     * and window's width and height
+     */
+    struct Display {
+        SDL_Window* window;
+        int displayWidth;
+        int displayHeight;
+        const char* displayTitle;
+    };
+
     class DisplayManager {
         public:
             //Constructors
             DisplayManager();
-            DisplayManager(const int displayWidth, const int displayHeight);
+            DisplayManager(Display* display);
 
             //Destructor
             ~DisplayManager();
@@ -25,7 +36,7 @@ namespace Managers {
             /* void createDisplay
              * Creates the display
              */
-            void createDisplay();
+            void createDisplay(Display* display);
 
             /* void updateDisplay
              * Updates the display on each new frame
@@ -35,21 +46,17 @@ namespace Managers {
             /* void closeDisplay
              * Execute any clean up before closing the display
              */
-            void closeDisplay();
+            void closeDisplay(Display* display);
 
-            /* SDL_Window* getDisplay
+            /* Display* getDisplay
              * Returns _display
              */
-             SDL_Window* getDisplay();
+             Display* getDisplay();
 
         protected:
         private:
-            //Display dimensions
-            int _displayWidth;
-            int _displayHeight;
-
-            //SDL Window handler
-            SDL_Window* _display;
+            //Display object
+            Display* _display;
     };
 
 }

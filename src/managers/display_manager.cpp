@@ -14,26 +14,37 @@ using namespace Managers;
 
 DisplayManager::DisplayManager() {};
 
- DisplayManager::DisplayManager(const int displayWidth, const int displayHeight) :
-    _displayWidth(displayWidth), 
-    _displayHeight(displayHeight)
+DisplayManager::DisplayManager(Display* display) :
+    _display(display) 
+{
+    this->createDisplay(this->_display);
+};
+
+void DisplayManager::createDisplay(Display* display) 
 { 
-    const char* MAIN_WINDOW_TITLE = "C++ 3D Game Engine";
 
     //Init SDL
-	SDL_Init(SDL_INIT_VIDEO);
+	bool isSDLVideoInitialized = (SDL_Init(SDL_INIT_VIDEO) == 0);
 
-    _display = SDL_CreateWindow(MAIN_WINDOW_TITLE,
-                              SDL_WINDOWPOS_CENTERED, 
-                              SDL_WINDOWPOS_CENTERED, 
-                              _displayWidth, 
-                              _displayHeight,
-                              SDL_WINDOW_OPENGL);
-
+    if (isSDLVideoInitialized) {
+        this->_display->window = SDL_CreateWindow(this->_display->displayTitle,
+                                SDL_WINDOWPOS_CENTERED, 
+                                SDL_WINDOWPOS_CENTERED, 
+                                this->_display->displayWidth, 
+                                this->_display->displayHeight,
+                                SDL_WINDOW_OPENGL);
+    } else {
+        SDL_Log("Unable to initialize SDL Video: %s", SDL_GetError());
+        return;
+    }
 };
 
  DisplayManager::~DisplayManager() {};
 
- SDL_Window* DisplayManager::getDisplay() {
+ Display* DisplayManager::getDisplay() {
     return this->_display;
  };
+
+ void DisplayManager::closeDisplay(Display* display) {
+     SDL_DestroyWindow(display->window);
+ }

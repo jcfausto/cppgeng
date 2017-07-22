@@ -8,11 +8,11 @@
 
 namespace Globals {
 
-    namespace Display {
+    namespace Window {
 
         //Screen dimension
-	    const int DISPLAY_WIDTH = 1280;
-	    const int DISPLAY_HEIGHT = 720;
+	    const int WINDOW_WIDTH = 1280;
+	    const int WINDOW_HEIGHT = 720;
 
     }
 
